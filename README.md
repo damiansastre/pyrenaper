@@ -203,7 +203,7 @@ All responses follow RENAPER's structure but add methods to check whether the re
 | **InvalidHeightException**| Image width does not fit current requirements.| 
 
 
-## Known Status Codes
+## <a name="status_codes">Known Status Codes
 
 | Code       | Description           |
 | ------------- |:-------------:|
@@ -304,7 +304,7 @@ docker run -it renaper tests.py
 | ------------- |:-------------:|:-------------:|
 | status | boolean | Flag verifying requests completion.
 | message | str | Message returned by API |
-| code | int | [Renaper Code](##Known Status Codes) |
+| code | int | [Renaper Code](#status_codes) |
 | code_description |str| Text description of code |
 | response | JSON| Original response returned by API |
 
