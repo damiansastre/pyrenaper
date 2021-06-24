@@ -1,6 +1,5 @@
 from functools import wraps
-from settings import STATUS_CODES
-from models import RenaperResponse
+from .models import RenaperResponse
 import os
 
 def api_call_wrapper(valid_status):
