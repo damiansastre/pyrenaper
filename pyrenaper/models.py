@@ -51,7 +51,7 @@ class RenaperResponse:
 
     @property
     def json(self):
-        return {attr: getattr(attr, self) for attr in ['status', 'code', 'code_description', 'message', 'request']}
+        return {attr: getattr(self, attr) for attr in ['status', 'code', 'code_description', 'message', 'request']}
 
     @property
     def response(self):
