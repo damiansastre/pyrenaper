@@ -204,7 +204,7 @@ All responses follow RENAPER's structure but add methods to check whether the re
  "response": Original Response.
 }
 ```
-TODO: Turn response dictionary into response object.
+**TODO**: Cast response dictionary into response object.
 
 ##Exceptions
 
@@ -316,6 +316,7 @@ There is a Dockerfile included for testing.
 docker build -t renaper .
 docker run -it renaper tests.py
 ```
+
 #Models
 
 ---
@@ -328,6 +329,7 @@ docker run -it renaper tests.py
 
 #TODO's
 
+---
 * Increase coverage
 * Create response models
 * Improve exception handling.
