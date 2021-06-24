@@ -23,6 +23,7 @@ class RenaperResponse:
     status = None
     code = None
     code_description = None
+    message = None
     _error_payload = None
     _response_payload = None
 
@@ -49,6 +50,10 @@ class RenaperResponse:
                 self.code_description = 'Returned Code is not configured in env.'
 
     @property
+    def json(self):
+        return {attr: getattr(attr, self) for attr in ['status', 'code', 'code_description', 'message', 'request']}
+
+    @property
     def response(self):
         if not self.status:
             return self._error_payload
@@ -57,6 +62,7 @@ class RenaperResponse:
     def __str__(self):
         return 'RenaperResponse(status={}, code={}, description={}, response={}'.format(str(self.status),
                                                                                         str(self.code),
+                                                                                        str(self.message),
                                                                                         self.code_description,
                                                                                         str(self.response))
 
