@@ -1,6 +1,5 @@
 # PYRENAPER
 
----
 Argentina's RENAPER (Registro nacional de las personas) python API implementation.
 
 This library provides python shortcuts for RENAPER's API.
@@ -8,15 +7,15 @@ This library provides python shortcuts for RENAPER's API.
 
 ## Libraries
 
----
+
 
 * [Xzing](https://github.com/zxing/zxing) Required to decode PDF417 Barcode information from ID Images.
 * [Java8](https://openjdk.java.net/install/) or higher required by xzing. 
 * Python >= 3.9
 
-##Installation
+## Installation
 
----
+
 
 ```
 pip install git+https://github.com/tagercito/pyrenaper
@@ -25,7 +24,7 @@ pip install git+https://github.com/tagercito/pyrenaper
 
 # Usage
 
----
+
 
 This library implements all of RENAPER packages: 
 * **PAQUETE 1**
@@ -41,21 +40,19 @@ renaper = Renaper(ONBOARDING
                   package_2=PACKAGE_2_APIKEY,
                   package_3=PACKAGE_3_API_KEY)
 ```
+
 ## NOTE:
 Packages can be used independently, if only package1 is being used there is no need to provide the rest.
 
-#Package 1
+# Package 1
 
----
 
 This flow implements a full validation of an ID: 
 * Front-Back of government ID picture.
 * Selfie validation (AKA Proof of live).
 * ID's PDF417 Barcode verification. 
 
-##Methods
-
----
+## Methods
 
 
 ### new_operation
@@ -79,7 +76,7 @@ renaper.new_operation(number, gender, ip, browser_fingerprint)
 | gender      | str      |   Must be M or F |
 | file | base64 encoded image  |  Image of back of ID   |
 | analyze_anomalies | boolean (default=False)     |  Whether to analyze anomalize or not  |
-| analyze_ocr | boolean(default=False)      | Whether to analyze anomalize or not   |
+| analyze_ocr | boolean (default=False)      | Whether to analyze anomalize or not   |
 
 ```
 renaper.add_back(operation_id, number, gender, file)
@@ -93,7 +90,7 @@ renaper.add_back(operation_id, number, gender, file)
 | gender      | str      |   Must be M or F |
 | file | base64 encoded image  |  Image of back of ID   |
 | analyze_anomalies | boolean (default=False)     |  Whether to analyze anomalize or not  |
-| analyze_ocr | boolean(default=False)      | Whether to analyze anomalize or not   |
+| analyze_ocr | boolean (default=False)      | Whether to analyze anomalize or not   |
 
 ```
 renaper.add_front(operation_id, number, gender, file)
@@ -137,25 +134,20 @@ renaper.end_operation(operation_id, number, gender)
 
 ### Recommended flow
 
----
 
- 1. new_operation
+
+1. new_operation
 2. add_back
 3. add_front
 4. register
 5. add_barcode
 6. end_operation
 
-#Package 2
-
----
+# Package 2
 
 This flow implements Proof of life.
 
-##Methods
-
----
-
+## Methods
 
 ### face_login
 | Parameter        | Type           |  Value  |
@@ -169,16 +161,11 @@ This flow implements Proof of life.
 renaper.face_login(number, gender, selfie_list, browser_fingerprint)
 ```
 
-#Package 3
-
----
+# Package 3
 
 This flow only validates plain document data and retrieves extra information about it.
 
-##Methods
-
----
-
+## Methods
 
 ### person_data
 | Parameter        | Type           |  Value  |
@@ -192,23 +179,12 @@ renaper.person_data(number, gender, order)
 ```
 
 
-###Responses
+### Responses
 
-All responses follow RENAPER's structure but add methods to check whether the response is valid or not
+All responses follow RENAPER's structure but add methods to check whether the response is valid or not, and return [Renaper Response](###Renaper Rsponse) objects.
 
-```
-{"status": True / False,
- "message": Original Message returned by RENAPER,
- "code": Renaper status code,
- "code_description": Description to Renaper's status code,
- "response": Original Response.
-}
-```
-**TODO**: Cast response dictionary into response object.
+## Exceptions
 
-##Exceptions
-
----
 | Exception        | Description           |
 | ------------- |:-------------:|
 | **IncorrectImageSize** | File does not meet valid sizes for method ( check documentation ) | 
@@ -228,8 +204,6 @@ All responses follow RENAPER's structure but add methods to check whether the re
 
 
 ## Known Status Codes
-
----
 
 | Code       | Description           |
 | ------------- |:-------------:|
@@ -309,7 +283,6 @@ All responses follow RENAPER's structure but add methods to check whether the re
 
 ## Dockerfile
 
----
 There is a Dockerfile included for testing.
 
 ```
@@ -317,19 +290,25 @@ docker build -t renaper .
 docker run -it renaper tests.py
 ```
 
-#Models
+# Models
 
----
-###Selfie
+### Selfie
 | Attribute        | Type           |
 | ------------- |:-------------:|
 | file | base64 image | 
 | type | ```enum(['SN', 'SS', 'SCE', 'SBL', 'SBR'])``` | 
 
+### Renaper Response
+| Attribute        | Type           | Description |
+| ------------- |:-------------:|:-------------:|
+| status | boolean | Flag verifying requests completion.
+| message | str | Message returned by API |
+| code | int | [Renaper Code](##Known Status Codes) |
+| code_description |str| Text description of code |
+| response | JSON| Original response returned by API |
 
-#TODO's
+# TODO's
 
----
 * Increase coverage
-* Create response models
+* ~~Create response models~~
 * Improve exception handling.

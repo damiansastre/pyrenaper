@@ -1,37 +1,17 @@
 from functools import wraps
 from settings import STATUS_CODES
+from models import RenaperResponse
 import os
-
 
 def api_call_wrapper(valid_status):
     def decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
             data = f(*args, **kwargs)
-            if data.get('code'):
-                if STATUS_CODES.get(data['code']):
-                    if STATUS_CODES[data['code']] in valid_status:
-                        message = data.pop('message')
-                        code = data.pop('code')
-                        return {"status": True,
-                                "message": message,
-                                'code': code,
-                                'code_description': STATUS_CODES[code],
-                                "response": data}
-
-            if data.get('error'):
-                code = data['error'].pop('code')
-                description = STATUS_CODES.get(data['error']['code'])
-                code_description = description if description else 'Unknown'
-                return {"status": False,
-                        'code': code,
-                        'code_description': code_description,
-                        "error": data['error']}
-
-            return {"status": False,
-                    "data": data}
+            return RenaperResponse(data, valid_status)
         return wrapper
     return decorator
+
 
 
 def package_id(package_id):

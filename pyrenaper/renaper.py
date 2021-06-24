@@ -129,10 +129,10 @@ class Renaper:
         np_img = Image.open(BytesIO(base64.b64decode(image)))
         np_img.save(filename)
         reader = zxing.BarCodeReader()
-        barcodes = reader.decode(filename)
-        if not barcodes:
+        barcode = reader.decode(filename)
+        if not barcode:
             raise BarcodeNotFoundException
-        return self._parse_barcode(barcodes.parsed)
+        return self._parse_barcode(barcode.parsed)
 
     def _add_document_image(self,
                             operation_type: str,
@@ -178,13 +178,9 @@ class Renaper:
             raise EmptySelfieListException
 
         for i in range(len(selfie_list)):
-            selfie = selfie_list[i]
-            if selfie.get('file'):
-                self._validate_image(selfie['file'], SELFIE_FORMAT_SETTINGS)
-                assert selfie['type'] in SELFIE_TYPE_FORMATS
-                selfies.append(dict(file=selfie['file'].decode(), imageType=selfie['type']))
-            else:
-                raise MissingSelfieFileException
+            self._validate_image(selfie_list[i].file, SELFIE_FORMAT_SETTINGS)
+            selfies.append(dict(file=selfie_list[i].file.decode(), imageType=selfie_list[i].image_type))
+
         return selfies
 
     def _local_scan_response(self, data):
@@ -213,6 +209,7 @@ class Renaper:
                 "ipAddress": ip,
                 "applicationVersion": APPLICATION_VERSION,
                 "browserFingerprintData": browser_fingerprint}
+
         return self._make_request('onboarding/newOperation', data, kwargs.get('package_id'))
 
     @package_id(1)
