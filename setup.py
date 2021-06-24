@@ -36,6 +36,6 @@ setuptools.setup(
                         "coverage"],
     include_package_data=True,
     packages=['pyrenaper'],
-    python_requires=">=3.9",
+    python_requires=">=3.8",
 )
 
