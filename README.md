@@ -1,4 +1,4 @@
-# PYRENAPER
+# py-renaper
 
 Argentina's RENAPER (Registro nacional de las personas) python API implementation.
 
