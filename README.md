@@ -16,15 +16,12 @@ This library provides python shortcuts for RENAPER's API.
 ## Installation
 
 
-
 ```
 pip install git+https://github.com/tagercito/pyrenaper
 ```
 
 
 # Usage
-
-
 
 This library implements all of RENAPER packages: 
 * **PAQUETE 1**
@@ -134,8 +131,6 @@ renaper.end_operation(operation_id, number, gender)
 
 ### Recommended flow
 
-
-
 1. new_operation
 2. add_back
 3. add_front
@@ -145,9 +140,11 @@ renaper.end_operation(operation_id, number, gender)
 
 # Package 2
 
+
 This flow implements Proof of life.
 
 ## Methods
+
 
 ### face_login
 | Parameter        | Type           |  Value  |
@@ -163,9 +160,11 @@ renaper.face_login(number, gender, selfie_list, browser_fingerprint)
 
 # Package 3
 
+
 This flow only validates plain document data and retrieves extra information about it.
 
 ## Methods
+
 
 ### person_data
 | Parameter        | Type           |  Value  |
@@ -180,6 +179,7 @@ renaper.person_data(number, gender, order)
 
 
 ### Responses
+
 
 All responses follow RENAPER's structure but add methods to check whether the response is valid or not, and return [Renaper Response](###Renaper Rsponse) objects.
 
@@ -299,6 +299,7 @@ docker run -it renaper tests.py
 | type | ```enum(['SN', 'SS', 'SCE', 'SBL', 'SBR'])``` | 
 
 ### Renaper Response
+
 | Attribute        | Type           | Description |
 | ------------- |:-------------:|:-------------:|
 | status | boolean | Flag verifying requests completion.
