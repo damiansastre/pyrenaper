@@ -40,8 +40,8 @@ class RenaperResponse:
             self.message = data.pop('message')
             self._response_payload = data
 
-            if STATUS_CODES.get(data['code']):
-                if STATUS_CODES[data['code']] in valid_status:
+            if STATUS_CODES.get(code):
+                if STATUS_CODES[code] in valid_status:
                     self.code_description = STATUS_CODES[code]
                 else:
                     self.code_description = 'Returned Code is not in valid_status for this function'
@@ -59,3 +59,6 @@ class RenaperResponse:
                                                                                         str(self.code),
                                                                                         self.code_description,
                                                                                         str(self.response))
+
+    def __repr__(self):
+        return self.__str__()
