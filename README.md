@@ -1,4 +1,4 @@
-# PYRENAPER
+# py-renaper
 
 Argentina's RENAPER (Registro nacional de las personas) python API implementation.
 
@@ -52,7 +52,7 @@ This flow implements a full validation of an ID:
 ## Methods
 
 
-### new_operation
+### <a name="new_operation"> new_operation
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
 | number      | int | 12392994 |
@@ -68,7 +68,7 @@ renaper.new_operation(number, gender, ip, browser_fingerprint)
 ### add_back
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
-| operation_id      | int | ID provided by [new_operation](###new_operation) |
+| operation_id      | int | ID provided by [new_operation](#new_operation) |
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
 | file | base64 encoded image  |  Image of back of ID   |
@@ -82,7 +82,7 @@ renaper.add_back(operation_id, number, gender, file)
 ### add_front
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
-| operation_id      | int | ID provided by [new_operation](###new_operation) |
+| operation_id      | int | ID provided by [new_operation](#new_operation) |
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
 | file | base64 encoded image  |  Image of back of ID   |
@@ -96,10 +96,10 @@ renaper.add_front(operation_id, number, gender, file)
 ### register
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
-| operation_id      | int | ID provided by [new_operation](###new_operation) |
+| operation_id      | int | ID provided by [new_operation](#new_operation) |
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
-| selfie_list | list of [Selfie](###Selfie)  |  ```[Selfie(image=BASE_64, type='SN')]```   |
+| selfie_list | list of [Selfie](#selfies)  |  ```[Selfie(image=BASE_64, type='SN')]```   |
 
 ```
 renaper.register(operation_id, number, gender, selfie_list)
@@ -108,7 +108,7 @@ renaper.register(operation_id, number, gender, selfie_list)
 ### add_barcode
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
-| operation_id      | int | ID provided by [new_operation](###new_operation) |
+| operation_id      | int | ID provided by [new_operation](#new_operation) |
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
 | image_file | (base64 image)  |  Image of front of ID.   |
@@ -121,7 +121,7 @@ renaper.add_barcode(operation_id, number, gender, image_file)
 
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
-| operation_id      | int | ID provided by [new_operation](###new_operation) |
+| operation_id      | int | ID provided by [new_operation](#new_operation) |
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
 
@@ -151,7 +151,7 @@ This flow implements Proof of life.
 | ------------- |:-------------:| -----:|
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
-| selfie_list | list of [Selfie](###Selfie)  |  ```[Selfie(image=BASE_64, type='SN')]```  |
+| selfie_list | list of [Selfie](#selfies)  |  ```[Selfie(image=BASE_64, type='SN')]```  |
 | browser_fingerprint | str      |  Browser fingerprint returned by REPAPER's JS fingerprint library.   |
 
 ```
@@ -181,7 +181,7 @@ renaper.person_data(number, gender, order)
 ### Responses
 
 
-All responses follow RENAPER's structure but add methods to check whether the response is valid or not, and return [Renaper Response](###Renaper Rsponse) objects.
+All responses follow RENAPER's structure but add methods to check whether the response is valid or not, and return [Renaper Response](#response) objects.
 
 ## Exceptions
 
@@ -203,7 +203,7 @@ All responses follow RENAPER's structure but add methods to check whether the re
 | **InvalidHeightException**| Image width does not fit current requirements.| 
 
 
-## Known Status Codes
+## <a name="status_codes">Known Status Codes
 
 | Code       | Description           |
 | ------------- |:-------------:|
@@ -292,19 +292,19 @@ docker run -it renaper tests.py
 
 # Models
 
-### Selfie
+### <a name="selfies">Selfie
 | Attribute        | Type           |
 | ------------- |:-------------:|
 | file | base64 image | 
 | type | ```enum(['SN', 'SS', 'SCE', 'SBL', 'SBR'])``` | 
 
-### Renaper Response
+### <a name="response">Renaper Response
 
 | Attribute        | Type           | Description |
 | ------------- |:-------------:|:-------------:|
 | status | boolean | Flag verifying requests completion.
 | message | str | Message returned by API |
-| code | int | [Renaper Code](##Known Status Codes) |
+| code | int | [Renaper Code](#status_codes) |
 | code_description |str| Text description of code |
 | response | JSON| Original response returned by API |
 
