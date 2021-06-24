@@ -1,8 +1,8 @@
 from collections import defaultdict
 from typing import Optional, Dict, List
-from decorators import api_call_wrapper, package_id, clean_files
-from exceptions import *
-from settings import *
+from .decorators import api_call_wrapper, package_id, clean_files
+from .exceptions import *
+from .settings import *
 from PIL import Image
 from io import BytesIO
 import base64

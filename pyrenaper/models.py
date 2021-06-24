@@ -1,7 +1,6 @@
 from collections import namedtuple
-from settings import SELFIE_TYPE_FORMATS
-from exceptions import InvalidImageFormatException
-from settings import STATUS_CODES
+from .exceptions import InvalidImageFormatException
+from .settings import STATUS_CODES, SELFIE_TYPE_FORMATS
 
 Environment = namedtuple('Environment', ['base_url', 'domain'])
 
