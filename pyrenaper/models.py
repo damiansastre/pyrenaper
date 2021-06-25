@@ -31,7 +31,7 @@ class RenaperResponse:
         if data.get('error'):
             self.status = False
             self.code = data['error'].pop('code')
-            description = STATUS_CODES.get(data['error']['code'])
+            description = STATUS_CODES.get(self.code)
             self.code_description = description if description else 'Unknown'
             self._error_payload = data['error']
         else:
