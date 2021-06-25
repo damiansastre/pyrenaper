@@ -1,9 +1,9 @@
 from collections import namedtuple
 from .exceptions import InvalidImageFormatException
 from .settings import STATUS_CODES, SELFIE_TYPE_FORMATS
+import json
 
 Environment = namedtuple('Environment', ['base_url', 'domain'])
-
 
 class Selfie:
     file = None
@@ -39,7 +39,7 @@ class RenaperResponse:
             code = data.pop('code')
             self.code = code
             self.message = data.pop('message')
-            self._response_payload = data
+            self._response_payload = self._check_for_operation_response(data)
 
             if STATUS_CODES.get(code):
                 if STATUS_CODES[code] in valid_status:
@@ -49,6 +49,22 @@ class RenaperResponse:
             else:
                 self.code_description = 'Returned Code is not configured in env.'
 
+    def _check_for_operation_response(self, data):
+        if data.get('anomalies'):
+            data['anomalies'] = json.loads(data['anomalies'])
+
+        if data.get('ocr'):
+            if data['ocr'].get('extra'):
+                if data['ocr']['extra'].get('additional'):
+                    data['ocr']['extra']['additional'] = json.loads(data['ocr']['extra']['additional'])
+                if data['ocr']['extra'].get('mrz'):
+                    data['ocr']['extra']['mrz'] = json.loads(data['ocr']['extra']['mrz'])
+
+        if data.get('personData'):
+            if data['personData'].get('person'):
+                data['personData']['person'] = json.loads(data['personData']['person'])
+
+        return data
     @property
     def json(self):
         return {attr: getattr(self, attr) for attr in ['status', 'code', 'code_description', 'message', 'response']}
