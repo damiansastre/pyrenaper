@@ -93,6 +93,9 @@ class Renaper:
                 if not (settings['min_height'] <= image.height <= settings['max_height']):
                     raise InvalidHeightException(image.width, settings['min_height'], settings['max_height'])
 
+    def _decode_image(self, image):
+        return image.decode() if type(image) == bytes else image
+
     def _parse_barcode(self, barcode: str) -> Dict:
         """
         Parses Document data from ID PDF417 QR code.
@@ -164,7 +167,7 @@ class Renaper:
                 "gender": gender,
                 "analyzeAnomalies": analyze_anomalies,
                 "analyzeOcr": analyze_ocr,
-                "file": file.decode()}
+                "file": self._decode_image(file)}
         return self._make_request("onboarding/add{}".format(operation_type.title()), data, kwargs.get('package_id'))
 
     def _check_selfie_format(self, selfie_list: List) -> Dict:
@@ -179,7 +182,7 @@ class Renaper:
 
         for i in range(len(selfie_list)):
             self._validate_image(selfie_list[i].file, SELFIE_FORMAT_SETTINGS)
-            selfies.append(dict(file=selfie_list[i].file.decode(), imageType=selfie_list[i].image_type))
+            selfies.append(dict(file=self._decode_image(selfie_list[i].file), imageType=selfie_list[i].image_type))
 
         return selfies
 
