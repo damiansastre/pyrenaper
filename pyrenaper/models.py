@@ -63,7 +63,8 @@ class RenaperResponse:
         if data.get('personData'):
             if data['personData'].get('person'):
                 data['personData']['person'] = json.loads(data['personData']['person'])
-
+        if data.get('person'):
+            data['person'] = json.loads(data['person'])
         return data
     @property
     def json(self):
