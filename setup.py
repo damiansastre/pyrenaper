@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyrenaper",
-    version="0.0.13",
+    version="0.0.14",
     author="Damian Sastre",
     author_email="author@example.com",
     description="Python implementation of Argentina's RENAPER API service.",
@@ -31,7 +31,6 @@ setuptools.setup(
                       "requests==2.25.1",
                       "toml==0.10.2",
                       "urllib3==1.26.5",
-                      "zxing",
                       "coverage"],
     include_package_data=True,
     packages=['pyrenaper'],
