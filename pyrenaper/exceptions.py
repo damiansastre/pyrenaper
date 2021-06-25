@@ -1,45 +1,54 @@
-class IncorrectImageSize(Exception):
-    pass
+class BaseRenaperException(Exception):
+    default_message = 'An error has ocurred'
+
+    def __init__(self, *args, **kwargs):
+        if args:
+            super().__init__(*args, **kwargs)
+        else:
+            super().__init__(self.default_message, **kwargs)
+
+class IncorrectImageSize(BaseRenaperException):
+    default_message = "Provided image has incorrect size."
 
 
-class InvalidOperation(Exception):
-    pass
+class InvalidOperation(BaseRenaperException):
+    default_message = "Invalid Operation, should be one of: back/front"
 
 
-class EmptySelfieListException(Exception):
-    pass
+class EmptySelfieListException(BaseRenaperException):
+    default_message = "Please provide at least 1 selfie"
 
 
-class MissingSelfieFileException(Exception):
-    pass
+class MissingSelfieFileException(BaseRenaperException):
+    default_message = "No Selfie provided in Selfie Object."
 
 
-class InvalidImage(Exception):
-    pass
+class InvalidImage(BaseRenaperException):
+    default_message = "Image format should be one of: JPEG/JPG"
 
 
-class GeoBlockedRequestException(Exception):
-    pass
+class GeoBlockedRequestException(BaseRenaperException):
+    default_message = "Your request hast been GeoBlocked"
 
 
-class InvalidDomainException(Exception):
-    pass
+class InvalidDomainException(BaseRenaperException):
+    default_message = "Incorrect Domain Provided"
 
 
-class InvalidApiKeyException(Exception):
-    pass
+class InvalidApiKeyException(BaseRenaperException):
+    default_message = "Api key is not valid"
 
 
-class InvalidApiKeyChannelException(Exception):
-    pass
+class InvalidApiKeyChannelException(BaseRenaperException):
+    default_message = "Api key is not valid"
 
 
-class BarcodeNotFoundException(Exception):
-    pass
+class BarcodeNotFoundException(BaseRenaperException):
+    default_message = "Image contains no barcodes."
 
 
-class IncorrectBarcodeException(Exception):
-    pass
+class IncorrectBarcodeException(BaseRenaperException):
+    default_message = "Barcode does not belong to a valid ID."
 
 
 class ApiKeyForPackageNotFoundException(Exception):
