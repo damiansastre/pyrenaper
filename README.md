@@ -7,10 +7,6 @@ This library provides python shortcuts for RENAPER's API.
 
 ## Libraries
 
-
-
-* [Xzing](https://github.com/zxing/zxing) Required to decode PDF417 Barcode information from ID Images.
-* [Java8](https://openjdk.java.net/install/) or higher required by xzing. 
 * Python >= 3.9
 
 ## Installation
@@ -105,13 +101,22 @@ renaper.add_front(operation_id, number, gender, file)
 renaper.register(operation_id, number, gender, selfie_list)
 ```
 
+### scan_barcode
+| Parameter        | Type           |  Value  |
+| ------------- |:-------------:| -----:|
+| file      | (base64 image) | Image containing PDF417 Barcode |
+
+```
+renaper.scan_barcode(file)
+```
+
 ### add_barcode
 | Parameter        | Type           |  Value  |
 | ------------- |:-------------:| -----:|
 | operation_id      | int | ID provided by [new_operation](#new_operation) |
 | number      | int | 12392994 |
 | gender      | str      |   Must be M or F |
-| image_file | (base64 image)  |  Image of front of ID.   |
+| document_data | dict  |  Document Data returned by [scan_barcode](#scan_barcode)   |
 
 ```
 renaper.add_barcode(operation_id, number, gender, image_file)

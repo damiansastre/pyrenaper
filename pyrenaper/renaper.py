@@ -7,7 +7,6 @@ from PIL import Image
 from io import BytesIO
 import base64
 import requests
-import zxing
 
 Response = requests.models.Response
 
@@ -124,6 +123,7 @@ class Renaper:
     @clean_files
     def _get_barcode_payload(self, operation_id: int, image: str) -> Dict:
         """
+        DEPRECATED
         Extracts information from Argentina's PDF417 Qr Code.
         :(base64 img) image: Image containing Argentina's Government PDF417 QR Code.
         :return:
@@ -298,15 +298,13 @@ class Renaper:
 
     @package_id(1)
     @api_call_wrapper(['BARCODE_SCAN_OK'])
-    def scan_barcode(self, image_file: str, local: Optional[bool] = False, **kwargs) -> Dict:
+    def scan_barcode(self, image_file: str, **kwargs) -> Dict:
         """
         :(base64 imaeg)  image_file: 417 Barcode image.
         :(boolean) local: Attempts to decode the barcode locally.
         :return:
         """
-        self._validate_image(image_file, PDF417_FORMAT_SETTINGS if not local else DOCUMENT_FORMAT_SETTINGS)
-        if local:
-            return self._local_scan_response(self._get_barcode_payload(image_file))
+        self._validate_image(image_file, DOCUMENT_FORMAT_SETTINGS)
         return self._make_request('onboarding/scanBarcode', {"file": image_file}, kwargs.get('package_id'))
 
     @package_id(1)
@@ -315,14 +313,12 @@ class Renaper:
                     operation_id: int,
                     number: int,
                     gender: str,
-                    image_file: str,
+                    document_data: dict,
                     **kwargs) -> Dict:
         """
         :(base64 imaeg)  image_file: 417 Barcode image.
         :return:
         """
-        self._validate_image(image_file, DOCUMENT_FORMAT_SETTINGS)
-        document_data = self._get_barcode_payload(operation_id, image_file)
         data = {"operationId": operation_id,
                 "gender": gender,
                 "number": number,
