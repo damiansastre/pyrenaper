@@ -29,7 +29,7 @@ class Sid:
         Returns:
             str: final url
         """
-        return ''.join((self._env['base_url'], url))
+        return ''.join((self._env.base_url, url))
     
     def _get_auth_headers(self):
         return {"Authorization": " ".join(("Bearer", self._token))}        
