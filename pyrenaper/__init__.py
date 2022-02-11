@@ -1,1 +1,2 @@
-from .renaper import Renaper, Sid
+from .renaper import Renaper
+from .sid import Sid
