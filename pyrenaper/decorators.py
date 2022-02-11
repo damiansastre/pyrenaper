@@ -1,6 +1,7 @@
 from functools import wraps
 from .models import RenaperResponse
 import os
+import uuid
 
 def api_call_wrapper(valid_status):
     def decorator(f):
@@ -23,15 +24,16 @@ def package_id(package_id):
 
 
 def clean_files(func):
-    def wrapper(self, operation_id, data):
+    def wrapper(self, data):
+        image_name= str(uuid.uuid4())
         try:
-            data = func(self, operation_id, data)
+            data = func(self, data, image_name)
             return data
         except Exception as e:
             raise e
         finally:
             try:
-                os.remove('{}.jpg'.format(operation_id))
+                os.remove('{}.jpg'.format(image_name))
             except:
                 pass
     return wrapper
