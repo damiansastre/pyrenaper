@@ -34,14 +34,14 @@ class BarcodeReader:
         return data
 
     @clean_files
-    def get_barcode_payload(self, image: str, image_name: str) -> Dict:
+    def get_barcode_payload(self, image: str, image_name: str, format: str) -> Dict:
         """
         DEPRECATED
         Extracts information from Argentina's PDF417 Qr Code.
         :(base64 img) image: Image containing Argentina's Government PDF417 QR Code.
         :return:
         """
-        filename = '{}.jpg'.format(image_name)
+        filename = '{}.{}'.format(image_name, format)
         np_img = Image.open(BytesIO(base64.b64decode(image)))
         np_img.save(filename)
         reader = zxing.BarCodeReader()
