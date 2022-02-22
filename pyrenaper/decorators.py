@@ -27,7 +27,7 @@ def clean_files(func):
     def wrapper(self, data, format):
         image_name= str(uuid.uuid4())
         try:
-            data = func(self, data, image_name)
+            data = func(self, data, image_name, format)
             return data
         except Exception as e:
             raise e
