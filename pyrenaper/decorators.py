@@ -24,9 +24,8 @@ def package_id(package_id):
 
 
 def clean_files(func):
-    def wrapper(self, data):
+    def wrapper(self, data, format):
         image_name= str(uuid.uuid4())
-        format = data[-1]
         try:
             data = func(self, data, image_name)
             return data
