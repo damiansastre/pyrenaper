@@ -26,6 +26,7 @@ def package_id(package_id):
 def clean_files(func):
     def wrapper(self, data):
         image_name= str(uuid.uuid4())
+        format = data[-1]
         try:
             data = func(self, data, image_name)
             return data
@@ -33,7 +34,7 @@ def clean_files(func):
             raise e
         finally:
             try:
-                os.remove('{}.jpg'.format(image_name))
+                os.remove('{}.{}'.format(image_name, format))
             except:
                 pass
     return wrapper
